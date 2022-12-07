@@ -11,47 +11,48 @@ import { Image } from "react-native";
 const Stack = createStackNavigator();
 
 export default function SharedStackNav({ screenName }) {
-  return (
+    return (
     <Stack.Navigator
-      headerMode="screen"
-      screenOptions={{
-        headerBackTitleVisible: false,
-        headerTintColor: "white",
-        headerStyle: {
-          borderBottomColor: "rgba(255, 255, 255, 0.3)",
-          shadowColor: "rgba(255, 255, 255, 0.3)",
-          backgroundColor: "black",
-        },
-      }}
+        screenOptions={{
+            headerMode: "screen",
+            headerBackTitleVisible: false,
+            headerTintColor: "white",
+            headerStyle: {
+                borderBottomColor: "rgba(255, 255, 255, 0.3)",
+                shadowColor: "rgba(255, 255, 255, 0.3)",
+                backgroundColor: "black",
+            },
+        }}
     >
-      {screenName === "Home" ? (
+        {screenName === "Home" ? (
         <Stack.Screen
-          name={"Home"}
-          component={Home}
-          options={{
-            headerTitle: () => (
-              <Image
-                style={{
-                  width: 120,
-                  height: 40,
-                }}
-                resizeMode="contain"
-                source={require("../assets/logo.png")}
-              />
-            ),
-          }}
-       />
-      ) : null}
-      {screenName === "Search" ? (
-        <Stack.Screen name={"Search"} component={Search} />
-      ) : null}
-      {screenName === "Profile" ? (
-        <Stack.Screen name={"Profile"} component={Profile} /> 
-      ) : null}
-      
-      <Stack.Screen name="LogIn" component={LogIn} />
-      <Stack.Screen name="SignUp" component={SignUp} />
-      <Stack.Screen name="CoffeeShop" component={CoffeeShop} />
+            name={"SharedStackHome"}
+            component={Home}
+            options={{
+                headerTitle: () => (
+                    <Image
+                        style={{
+                            width: 120,
+                            height: 40,
+                        }}
+                        resizeMode="contain"
+                        source={require("../assets/logo.png")}
+                    />
+                ),
+            }}
+        />
+        ) : null}
+        {screenName === "Search" ? (
+            <Stack.Screen name={"SharedStackSearch"} component={Search} />
+        ) : null}
+        {screenName === "Profile" ? (
+            <Stack.Screen name={"SharedStackProfile"} component={Profile} /> 
+        ) : null}
+        
+        <Stack.Screen name="SharedStackLogIn" component={LogIn} />
+        <Stack.Screen name="SharedStackSignUp" component={SignUp} />
+        <Stack.Screen name="SharedStackCoffeeShop" component={CoffeeShop} />
     </Stack.Navigator>
-  );
+    );
 }
+

@@ -1,10 +1,12 @@
 import { gql, useQuery } from "@apollo/client";
-import React from "react";
-import { Text, View } from "react-native";
+import React, { useEffect, useState } from "react";
+import { FlatList } from "react-native";
+import CoffeeShop from "../components/CoffeeShop";
+import ScreenLayout from "../components/ScreenLayout";
 
-export const SEE_COFFEE_SHOPS_QUERY = gql`
-    query seeCoffeeShops($page: Int!, $photosPage: Int!){
-        seeCoffeeShops(page: $page){
+const SEE_COFFEE_SHOPS_QUERY = gql`
+    query seeCoffeeShops($offset: Int!, $photosPage: Int!){
+        seeCoffeeShops(offset: $offset){
             id
             name
             slug
@@ -22,29 +24,48 @@ export const SEE_COFFEE_SHOPS_QUERY = gql`
                 id
                 name
             }
+            createdAt
+            updatedAt
         }       
     }
 `;
 
 export default function Home(){
-    const page = 1;
-    const photosPage = 1;
-    const { data } = useQuery(SEE_COFFEE_SHOPS_QUERY, {
+    const { data, loading, refetch, fetchMore } = useQuery(SEE_COFFEE_SHOPS_QUERY, {
         variables: {
-            page,
-            photosPage
+            offset: 0,
+            photosPage: 1
         },
     });
+    const renderCoffeShop = ({ item: coffeShop }) => {
+        return <CoffeeShop {...coffeShop} />;
+    };
+    const refresh = async () => {
+        setRefreshing(true);
+        await refetch();
+        setRefreshing(false);
+    };
+    const [refreshing, setRefreshing] = useState(false);
     return (
-        <View
-        style={{
-            backgroundColor: "black",
-            flex: 1,
-            alignItems: "center",
-            justifyContent: "center",
-        }}
-        >
-            <Text style={{ color: "white" }}>Home</Text>
-        </View>
+        <ScreenLayout loading={loading}>
+            <FlatList
+                onEndReachedThreshold={0.02}
+                onEndReached={() =>
+                    fetchMore({
+                        variables: {
+                            offset: data?.seeCoffeeShops?.length,
+                            photosPage: 1
+                        },
+                    })
+                }
+                refreshing={refreshing} 
+                onRefresh={refresh}
+                style={{ width: "100%" }}m
+                showsVerticalScrollIndicator={false}
+                data={data?.seeCoffeeShops}
+                keyExtractor={(coffeShop) => "" + coffeShop.id}
+                renderItem={renderCoffeShop}
+            />
+        </ScreenLayout>
     );
 }

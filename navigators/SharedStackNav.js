@@ -4,13 +4,15 @@ import SignUp from "../screens/SignUp";
 import LogIn from "../screens/LogIn";
 import Home from "../screens/Home";
 import Search from "../screens/Search";
-import Profile from "../screens/Profile";
+import Me from "../screens/Me";
 import CoffeeShop from "../screens/CoffeeShop";
 import { Image } from "react-native";
+import useMe from "../hooks/useMe";
 
 const Stack = createStackNavigator();
 
 export default function SharedStackNav({ screenName }) {
+    const { data, loading } = useMe();
     return (
     <Stack.Navigator
         screenOptions={{
@@ -45,13 +47,29 @@ export default function SharedStackNav({ screenName }) {
         {screenName === "Search" ? (
             <Stack.Screen name={"SharedStackSearch"} component={Search} />
         ) : null}
-        {screenName === "Profile" ? (
-            <Stack.Screen name={"SharedStackProfile"} component={Profile} /> 
+        {screenName === "Me" ? (
+            <Stack.Screen 
+                name={"SharedStackMe"} 
+                component={Me}
+                options={{
+                    title: data?.me?.username,
+                }}
+            /> 
+        ) : null}
+        {screenName === "CoffeeShop" ? (
+            <Stack.Screen name={"SharedStackCoffeeShop"} component={CoffeeShop} /> 
         ) : null}
         
-        <Stack.Screen name="SharedStackLogIn" component={LogIn} />
+        {screenName === "LogIn" ? (
+            <Stack.Screen 
+                name="SharedStackLogIn" 
+                component={LogIn} 
+                options={{
+                    headerTitle: () => null,
+                }}
+            />
+        ) : null }
         <Stack.Screen name="SharedStackSignUp" component={SignUp} />
-        <Stack.Screen name="SharedStackCoffeeShop" component={CoffeeShop} />
     </Stack.Navigator>
     );
 }

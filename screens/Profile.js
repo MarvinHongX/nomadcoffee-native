@@ -1,8 +1,19 @@
-import React from "react";
-import { Text, TouchableOpacity, View } from "react-native";
-import { logUserOut } from "../apollo";
+import React, { useEffect } from "react";
+import { Text, View } from "react-native";
 
-export default function Profile() {
+
+export default function Profile({ navigation, route }) {
+    /*
+    useEffect(() => {
+        if (route?.params?.username) {
+            navigation.setOptions({
+                title: route.params.username,
+            });
+        }
+    }, []);
+    
+    */
+    console.log(route);
     return (
         <View
             style={{
@@ -12,18 +23,8 @@ export default function Profile() {
                 justifyContent: "center",
             }}
         >
-            <Text style={{ color: "white" }}>My Profile</Text>
-            <TouchableOpacity onPress={() => logUserOut()}>
-            <Text 
-                style={{ 
-                    color: "white",
-                    textAlign: "center",
-                    marginTop: 20
-                }}
-            >
-                Log Out
-            </Text>
-            </TouchableOpacity>
+            <Text style={{ color: "white" }}>Profile</Text>
         </View>
+        
     );
 }

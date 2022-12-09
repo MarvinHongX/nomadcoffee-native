@@ -45,7 +45,7 @@ export default function App() {
     return (
         <ApolloProvider client={client}>
             <NavigationContainer>
-            <CommonNav isLoggedIn={isLoggedIn}/>
+                <CommonNav isLoggedIn={isLoggedIn}/>
             </NavigationContainer>
         </ApolloProvider>
     );

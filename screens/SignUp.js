@@ -29,23 +29,20 @@ const CREATE_ACCOUNT_MUTATION = gql`
 export default function CreateAccount({ navigation }) {
     const { register, handleSubmit, setValue, getValues } = useForm();
     const onCompleted = (data) => {
-      const {
-        createAccount: { ok },
-      } = data;
-      const { username, password } = getValues();
-      if (ok) {
-        navigation.navigate("LogIn", {
-          username,
-          password,
-        });
-      }
+        const {
+            createAccount: { ok },
+        } = data;
+        const { username, password } = getValues();
+        if (ok) {
+            navigation.navigate("LogIn", {
+                username,
+                password,
+            });
+        }
     };
-    const [createAccountMutation, { loading }] = useMutation(
-      CREATE_ACCOUNT_MUTATION,
-      {
+    const [createAccountMutation, { loading }] = useMutation(CREATE_ACCOUNT_MUTATION,{
         onCompleted,
-      }
-    );
+    });
     const usernameRef = useRef();
     const emailRef = useRef();
     const passwordRef = useRef();
@@ -54,7 +51,6 @@ export default function CreateAccount({ navigation }) {
         nextOne?.current?.focus();
     };
     const onValid = (data) => {
-        console.log(data);
         if (!loading) {
             createAccountMutation({
                 variables: {

@@ -28,13 +28,13 @@ export default function Login({ navigation, route: { params } }) {
     const passwordRef = useRef();
     const onCompleted = async (data) => {
         const {
-          login: { ok, token },
+            login: { ok, token },
         } = data;
         if (ok) {
             await logUserIn(token);
         }
     };
-    const [logInMutation, { loading }] = useMutation(LOGIN_MUTATION, {
+    const [logInMutation, { loading, error }] = useMutation(LOGIN_MUTATION, {
         onCompleted,
     });
     const onNext = (nextOne) => {

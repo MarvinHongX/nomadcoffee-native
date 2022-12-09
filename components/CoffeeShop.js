@@ -43,9 +43,8 @@ export default function CoffeeShop({ id, name, user, photos, categories }) {
         });
       }, [photos[0]?.url]);
     const goToProfile = () => {
-        navigation.navigate("Profile", {
-            username: user.username,
-            id: user.id,
+        navigation.navigate("CoffeeShop", {
+            id, name, photos, categories
         });
     };
     return (

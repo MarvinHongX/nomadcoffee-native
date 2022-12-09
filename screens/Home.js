@@ -13,6 +13,7 @@ const SEE_COFFEE_SHOPS_QUERY = gql`
             latitude
             longitude
             user {
+                id
                 username
                 avatarURL
             }
